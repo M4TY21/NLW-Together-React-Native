@@ -1,20 +1,41 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import * as React from "react";
+import { View, Text, Image, Button } from "react-native";
 
 export default function App() {
+
+  let nome = 'Matheus';
+
   return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
+    <View>
+      <Text style={{ color: '#FF0000', fontSize: 25, margin: 10 }}>
+        Olá {nome}
+      </Text>
+
+      <Button title="Entrar"/>
+
+      <Jobs
+        Largura={500}
+        Altura={500}
+        Name={nome}
+      />
+
     </View>
   );
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
+function Jobs(Props) {
+
+  let img = 'http://sujeitoprogramador.com/steve.png';
+
+  return (
+    <View>
+      <Image
+      source={{ uri: img }}
+      style={{ width: Props.Largura, height: Props.Altura }}
+      />
+      <Text>
+        Foto de {Props.Name}
+      </Text>
+    </View>
+  )
+}
