@@ -6,9 +6,12 @@ import {
 
 import { styles } from "./styles";
 
-export function Appointment({ }){
+export function Appointment({ data, ...rest }){
   return (
-    <View style={styles.container}>
-    </View>
+    <TouchableOpacity {...rest}>
+      <View style={styles.container}>
+        <GuildIcon />
+      </View>
+    </TouchableOpacity>
   )
 }
