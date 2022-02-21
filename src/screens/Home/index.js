@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import { CategorySelect } from '../../components/CategorySelect';
+import { Appointment } from '../../components/Appointment';
+import { ListDivider } from '../../components/ListDivider';
 import { ListHeader } from '../../components/ListHeader';
 import { ButtonAdd } from '../../components/ButtonAdd';
 import { Profile } from '../../components/Profile';
@@ -13,7 +15,19 @@ export function Home() {
   const appointments = [
     {
       id: '1',
-      guid: {
+      guild: {
+        id: '1',
+        name: 'Lendários',
+        icon: null,
+        owner: true
+      },
+      category: '1',
+      date: '20/02 ás 20:40',
+      description: 'É hoje que vamos chegar ao challenger sem perder uma partida da md10'
+    },
+    {
+      id: '2',
+      guild: {
         id: '1',
         name: 'Lendários',
         icon: null,
@@ -30,34 +44,35 @@ export function Home() {
   }
 
   return (
-    <View style={styles.container}>
+    <View>
       <View style={styles.header}>
         <Profile/>
         <ButtonAdd activeOpacity={0.8}/>
       </View>
 
-      <View>
-        <CategorySelect
-          categorySelected={category}
-          setCategory={handleCategorySelect}
+      <CategorySelect
+        categorySelected={category}
+        setCategory={handleCategorySelect}
+      />
+
+      <View style={styles.content}>
+
+        <ListHeader
+          title="Partidas Agendadadas"
+          subtitle="Total 6"
         />
 
-        <View style={styles.content}>
+        <FlatList
+          data={appointments}
+          keyExtractor={item => item.id}
+          ItemSeparatorComponent={() => <ListDivider/>}
+          renderItem={({ item }) => (
+            <Appointment data={item} activeOpacity={0.8}/>
+          )}
+            style={styles.matches}
+            showsHorizontalScrollIndicator={false}
+        />
 
-          <ListHeader
-            title="Partidas Agendadadas"
-            subtitle="Total "
-          />
-
-          <FlatList
-            data={appointments}
-            keyExtractor={item => item.id}
-            renderItem={({ item }) => (
-              <Text> { item.guid.name } </Text>
-            )}
-          />
-
-        </View>
       </View>
     </View>
   )
