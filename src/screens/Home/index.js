@@ -53,6 +53,7 @@ export function Home() {
       <CategorySelect
         categorySelected={category}
         setCategory={handleCategorySelect}
+        hasChecked={false}
       />
 
       <View style={styles.content}>
