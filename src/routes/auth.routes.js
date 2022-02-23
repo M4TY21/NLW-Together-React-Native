@@ -1,8 +1,11 @@
 import React from "react";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 
-import { Home } from "../screens/Home/index";
-import { SignIn } from "../screens/SignIn/index";
+import { theme } from "../global/styles/theme";
+
+import { AppointmentDetails } from "../screens/AppointmentDetails";
+import { SignIn } from "../screens/SignIn";
+import { Home } from "../screens/Home";
 
 const { Navigator, Screen } = createNativeStackNavigator();
 
@@ -11,7 +14,7 @@ export function AuthRoutes() {
     <Navigator
       screenOptions={{
         headerShown: false,
-        contentStyle: { backgroundColor: 'transparent' }
+        contentStyle: { backgroundColor: theme.colors.secondary100 }
       }}
     >
       <Screen
@@ -21,6 +24,10 @@ export function AuthRoutes() {
       <Screen
         name="Home"
         component={Home}
+      />
+      <Screen
+        name="AppointmentDetails"
+        component={AppointmentDetails}
       />
     </Navigator>
   )

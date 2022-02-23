@@ -25,6 +25,7 @@ export const styles = StyleSheet.create({
     fontFamily: theme.fonts.text400,
     color: theme.colors.highlight,
     fontSize: 13,
+    marginRight: 22
   },
   footer: {
     width: '100%',
