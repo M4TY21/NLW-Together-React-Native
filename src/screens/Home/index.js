@@ -16,9 +16,14 @@ export function Home() {
 
   const navigation = useNavigation();
 
+  function handleAppointmentCreate(){
+    navigation.navigate("AppointmentCreate");
+  }
+
   function handleAppointmentDetails(){
     navigation.navigate("AppointmentDetails");
   }
+
   const appointments = [
     {
       id: '1',
@@ -54,8 +59,13 @@ export function Home() {
     <Background>
       <View>
         <View style={styles.header}>
+
           <Profile/>
-          <ButtonAdd activeOpacity={0.8}/>
+
+          <ButtonAdd
+            activeOpacity={0.8}
+            onPress={handleAppointmentCreate}
+          />
         </View>
 
         <CategorySelect

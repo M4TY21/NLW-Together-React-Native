@@ -23,9 +23,8 @@ export function CategorySelect({ categorySelected, setCategory, hasChecked = fal
             onPress={() => setCategory(category.id)}
             hasChecked={hasChecked}
           />
-        ))
+        ))}
 
-      }
     </ScrollView>
   )
 }
