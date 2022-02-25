@@ -2,6 +2,9 @@
   "useTabs": true,
   "tabWidth": 2,
   "endOfLine": "lf",
-  "bracketLine": false,
-  "bracketSpacing": true
+  "bracketSameLine": true,
+  "arrowParens": "always",
+  "jsxSingleQuote": true,
+  "bracketSpacing": true,
+  "printWidth": 60
 }
