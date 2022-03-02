@@ -10,12 +10,13 @@ import {
 } from "react-native";
 
 import { CategorySelect } from "../../components/CategorySelect";
-import { Background } from "../../components/Background";
 import { SmallInput } from "../../components/SmallInput";
+import { ModalView } from "../../components/ModalView";
 import { GuildIcon } from "../../components/GuildIcon";
 import { TextArea } from "../../components/TextArea";
 import { Header } from "../../components/Header";
 import { Button } from "../../components/Button";
+import { Guilds } from "../Guilds";
 
 import { Feather } from "@expo/vector-icons";
 import { theme } from "../../global/styles/theme";
@@ -34,8 +35,11 @@ export function AppointmentCreate() {
 		<KeyboardAvoidingView
 			style={styles.container}
 			behavior={
-				Platform.OS === "ios" ? "padding" : "height"
-			}>
+				Platform.OS === "ios"
+					? "padding"
+					: "height"
+			}
+		>
 			<ScrollView>
 				<Header title='Agendar partida' />
 
@@ -47,7 +51,8 @@ export function AppointmentCreate() {
 							marginLeft: 24,
 							marginBottom: 18,
 						},
-					]}>
+					]}
+				>
 					Categoria
 				</Text>
 
@@ -83,27 +88,41 @@ export function AppointmentCreate() {
 
 					<View style={styles.field}>
 						<View>
-							<Text style={styles.label}>Dia e mês</Text>
+							<Text style={styles.label}>
+								Dia e mês
+							</Text>
 							<View style={styles.column}>
 								<SmallInput maxLength={2} />
-								<Text style={styles.divider}>/</Text>
+								<Text style={styles.divider}>
+									/
+								</Text>
 								<SmallInput maxLength={2} />
 							</View>
 						</View>
 
 						<View>
-							<Text style={styles.label}>Horário</Text>
+							<Text style={styles.label}>
+								Horário
+							</Text>
 							<View style={styles.column}>
 								<SmallInput maxLength={2} />
-								<Text style={styles.divider}>:</Text>
+								<Text style={styles.divider}>
+									:
+								</Text>
 								<SmallInput maxLength={2} />
 							</View>
 						</View>
 					</View>
 
 					<View
-						style={[styles.field, { marginBottom: 12 }]}>
-						<Text style={styles.label}>Descrição</Text>
+						style={[
+							styles.field,
+							{ marginBottom: 12 },
+						]}
+					>
+						<Text style={styles.label}>
+							Descrição
+						</Text>
 
 						<Text style={styles.caracteresLimit}>
 							Max 100
@@ -126,6 +145,10 @@ export function AppointmentCreate() {
 					/>
 				</View>
 			</ScrollView>
+
+			<ModalView>
+				<Guilds />
+			</ModalView>
 		</KeyboardAvoidingView>
 	);
 }
