@@ -17,6 +17,7 @@ import { TextArea } from "../../components/TextArea";
 import { Header } from "../../components/Header";
 import { Button } from "../../components/Button";
 import { Guilds } from "../Guilds";
+import { guildss } from "../Guilds";
 
 import { Feather } from "@expo/vector-icons";
 import { theme } from "../../global/styles/theme";
@@ -24,6 +25,18 @@ import { styles } from "./styles";
 
 export function AppointmentCreate() {
 	const [category, setCategory] = useState("");
+	const [openGuildsModal, setOpenGuildsModal] =
+		useState(false);
+	const [guild, setGuild] = useState(guildss);
+
+	function handleOpenGuilds() {
+		setOpenGuildsModal(true);
+	}
+
+	function handleGuildSelect(guildSelect) {
+		setGuild(guildSelect);
+		setOpenGuildsModal(false);
+	}
 
 	function handleCategorySelect(categoryId) {
 		categoryId === category
@@ -35,9 +48,7 @@ export function AppointmentCreate() {
 		<KeyboardAvoidingView
 			style={styles.container}
 			behavior={
-				Platform.OS === "ios"
-					? "padding"
-					: "height"
+				Platform.OS === "ios" ? "padding" : "height"
 			}
 		>
 			<ScrollView>
@@ -65,16 +76,22 @@ export function AppointmentCreate() {
 				</View>
 
 				<View style={styles.form}>
-					<TouchableOpacity activeOpacity={1}>
+					<TouchableOpacity
+						activeOpacity={1}
+						onPress={handleOpenGuilds}
+					>
 						<View style={styles.select}>
-							{/* {
-              <View style={styles.image} />
-              <GuildIcon />
-            } */}
+							{guild.icon ? (
+								<GuildIcon />
+							) : (
+								<View style={styles.image} />
+							)}
 
 							<View style={styles.selectBody}>
 								<Text style={styles.label}>
-									Selecione um servidor
+									{guild.name
+										? guild.name
+										: "Selecione um servidor"}
 								</Text>
 							</View>
 
@@ -88,41 +105,28 @@ export function AppointmentCreate() {
 
 					<View style={styles.field}>
 						<View>
-							<Text style={styles.label}>
-								Dia e mês
-							</Text>
+							<Text style={styles.label}>Dia e mês</Text>
 							<View style={styles.column}>
 								<SmallInput maxLength={2} />
-								<Text style={styles.divider}>
-									/
-								</Text>
+								<Text style={styles.divider}>/</Text>
 								<SmallInput maxLength={2} />
 							</View>
 						</View>
 
 						<View>
-							<Text style={styles.label}>
-								Horário
-							</Text>
+							<Text style={styles.label}>Horário</Text>
 							<View style={styles.column}>
 								<SmallInput maxLength={2} />
-								<Text style={styles.divider}>
-									:
-								</Text>
+								<Text style={styles.divider}>:</Text>
 								<SmallInput maxLength={2} />
 							</View>
 						</View>
 					</View>
 
 					<View
-						style={[
-							styles.field,
-							{ marginBottom: 12 },
-						]}
+						style={[styles.field, { marginBottom: 12 }]}
 					>
-						<Text style={styles.label}>
-							Descrição
-						</Text>
+						<Text style={styles.label}>Descrição</Text>
 
 						<Text style={styles.caracteresLimit}>
 							Max 100
@@ -146,8 +150,8 @@ export function AppointmentCreate() {
 				</View>
 			</ScrollView>
 
-			<ModalView>
-				<Guilds />
+			<ModalView visible={openGuildsModal}>
+				<Guilds handleGuildSelect={handleGuildSelect} />
 			</ModalView>
 		</KeyboardAvoidingView>
 	);

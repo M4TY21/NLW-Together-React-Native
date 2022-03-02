@@ -7,15 +7,16 @@ export const styles = StyleSheet.create({
 		marginTop: 100,
 	},
 	overlay: {
-		backgroundColor: theme.colors.overlay,
 		flex: 1,
+		backgroundColor: theme.colors.overlay,
 	},
 	bar: {
-		width: 39,
-		height: 2,
+		width: 80,
+		height: 3,
 		borderRadius: 2,
 		backgroundColor: theme.colors.secondary30,
-		alignItems: "center",
+		alignSelf: "center",
 		marginTop: 13,
+		marginBottom: 13,
 	},
 });
