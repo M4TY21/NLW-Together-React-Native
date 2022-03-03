@@ -1,10 +1,8 @@
-import { StyleSheet } from 'react-native';
-import { theme } from '../../global/styles/theme';
+import { StyleSheet } from "react-native";
 
 export const styles = StyleSheet.create({
-  container: {
-    minHeight: 120,
-    minWidth: 120,
-    paddingLeft: 24
-  }
+	container: {
+		paddingLeft: 15,
+		maxHeight: 160,
+	},
 });
