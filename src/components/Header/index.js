@@ -1,10 +1,6 @@
 import React from "react";
 
-import {
-  View,
-  Text,
-  TouchableOpacity
-} from "react-native";
+import { View, Text, TouchableOpacity } from "react-native";
 
 import { BorderlessButton } from "react-native-gesture-handler";
 import { useNavigation } from "@react-navigation/native";
@@ -14,43 +10,39 @@ import { Feather } from "@expo/vector-icons";
 import { theme } from "../../global/styles/theme";
 import { styles } from "./styles";
 
-export function Header({ title, action }){
+export function Header({ title, action }) {
+	const navigation = useNavigation();
 
-  const navigation = useNavigation();
+	const { secondary100, secondary40, heading } =
+		theme.colors;
 
-  const { secondary100, secondary40, heading } = theme.colors;
+	function handleGoBack() {
+		navigation.goBack();
+	}
 
-  function handleGoBack(){
-    navigation.goBack();
-  }
+	return (
+		<LinearGradient
+			style={styles.container}
+			colors={[secondary100, secondary40]}
+		>
+			<TouchableOpacity
+				onPress={handleGoBack}
+				activeOpacity={0.8}
+			>
+				<Feather
+					name='arrow-left'
+					size={24}
+					color={heading}
+				/>
+			</TouchableOpacity>
 
-  return (
-    <LinearGradient
-      style={styles.container}
-      colors={[ secondary100, secondary40 ]}
-    >
-      <TouchableOpacity
-        onPress={handleGoBack}
-        activeOpacity={0.8}
-      >
-        <Feather
-          name="arrow-left"
-          size={24}
-          color={heading}
-        />
-      </TouchableOpacity>
+			<Text style={styles.title}>{title}</Text>
 
-      <Text style={styles.title}>
-        { title }
-      </Text>
-
-      {
-        action &&
-        <View>
-          { action }
-        </View>
-      }
-
-    </LinearGradient>
-  )
+			{action ? (
+				<View>{action}</View>
+			) : (
+				<View style={{ width: 24 }} />
+			)}
+		</LinearGradient>
+	);
 }

@@ -15,6 +15,7 @@ export function CategorySelect({
 			horizontal
 			style={styles.container}
 			showsHorizontalScrollIndicator={false}
+			showHorizontalScroll
 			contentContainerStyle={{
 				paddingRight: 40,
 				marginBottom: 20,

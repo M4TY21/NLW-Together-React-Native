@@ -7,7 +7,7 @@ import { ListDivider } from "../../components/ListDivider";
 
 import { styles } from "./styles";
 
-export const guildss = [
+export const data = [
 	{
 		id: "1",
 		name: "Lendários",
@@ -20,49 +20,13 @@ export const guildss = [
 		icon: "image.png",
 		owner: true,
 	},
-	{
-		id: "3",
-		name: "Lendários",
-		icon: "image.png",
-		owner: true,
-	},
-	{
-		id: "4",
-		name: "Lendários",
-		icon: "image.png",
-		owner: true,
-	},
-	{
-		id: "5",
-		name: "Lendários",
-		icon: "image.png",
-		owner: true,
-	},
-	{
-		id: "6",
-		name: "Lendários",
-		icon: "image.png",
-		owner: true,
-	},
-	{
-		id: "7",
-		name: "Lendários",
-		icon: "image.png",
-		owner: true,
-	},
-	{
-		id: "8",
-		name: "Lendários",
-		icon: "image.png",
-		owner: true,
-	},
 ];
 
 export function Guilds({ handleGuildSelect }) {
 	return (
 		<View style={styles.container}>
 			<FlatList
-				data={guildss}
+				data={data}
 				keyExtractor={(item) => item.id}
 				renderItem={({ item }) => (
 					<Guild
