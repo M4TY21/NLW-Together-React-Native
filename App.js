@@ -11,7 +11,7 @@ import AppLoading from "expo-app-loading";
 import { StatusBar } from "react-native";
 import { useFonts } from "expo-font";
 
-import { AuthContext } from "./src/hooks/auth";
+import { AuthProvider } from "./src/hooks/auth";
 
 import { Routes } from "./src/routes/index";
 import { Background } from "./src/components/Background";
@@ -35,15 +35,9 @@ export default function App() {
 				backgroundColor='transparent'
 				translucent
 			/>
-			<AuthContext.Provider
-				value={{
-					name: "Matheus",
-					email: "matheuseugenio212@gmail.com",
-					avatar: "matheus.png",
-				}}
-			>
+			<AuthProvider>
 				<Routes />
-			</AuthContext.Provider>
+			</AuthProvider>
 		</Background>
 	);
 }
