@@ -11,29 +11,24 @@ import { Home } from "../screens/Home";
 const { Navigator, Screen } = createNativeStackNavigator();
 
 export function AuthRoutes() {
-  return (
-    <Navigator
-      screenOptions={{
-        headerShown: false,
-        contentStyle: { backgroundColor: theme.colors.secondary100 }
-      }}
-    >
-      <Screen
-        name="SignIn"
-        component={SignIn}
-      />
-      <Screen
-        name="Home"
-        component={Home}
-      />
-      <Screen
-        name="AppointmentDetails"
-        component={AppointmentDetails}
-      />
-      <Screen
-        name="AppointmentCreate"
-        component={AppointmentCreate}
-      />
-    </Navigator>
-  )
+	return (
+		<Navigator
+			screenOptions={{
+				headerShown: false,
+				contentStyle: {
+					backgroundColor: theme.colors.secondary100,
+				},
+			}}
+		>
+			<Screen name='Home' component={Home} />
+			<Screen
+				name='AppointmentDetails'
+				component={AppointmentDetails}
+			/>
+			<Screen
+				name='AppointmentCreate'
+				component={AppointmentCreate}
+			/>
+		</Navigator>
+	);
 }

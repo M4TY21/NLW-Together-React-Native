@@ -1,34 +1,30 @@
 import React from "react";
-import {
-  View,
-  Text,
-} from "react-native";
+import { View, Text } from "react-native";
+import { useAuth } from "../../hooks/auth";
 import { Avatar } from "../Avatar/index";
 
 import { styles } from "./styles";
 
 export function Profile() {
-  return (
-    <View style={styles.container}>
+	const { user } = useAuth();
+	console.log(user);
+	return (
+		<View style={styles.container}>
+			<Avatar urlImage={user.avatar} />
 
-      <Avatar urlImage="https://github.com/M4TY21.png"/>
+			<View>
+				<View style={styles.user}>
+					<Text style={styles.greeting}>Olá,</Text>
 
-      <View>
-        <View style={styles.user}>
-          <Text style={styles.greeting}>
-            Olá,
-          </Text>
+					<Text style={styles.username}>
+						{user.firstName}
+					</Text>
+				</View>
 
-          <Text style={styles.username}>
-            Matheus
-          </Text>
-        </View>
-
-        <Text style={styles.message}>
-          Hoje é dia de vitória
-        </Text>
-      </View>
-
-    </View>
-  )
+				<Text style={styles.message}>
+					Hoje é dia de vitória
+				</Text>
+			</View>
+		</View>
+	);
 }
