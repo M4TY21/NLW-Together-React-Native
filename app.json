@@ -1,11 +1,11 @@
 {
   "expo": {
-    "name": "Curso",
-    "slug": "Curso",
+    "name": "Gameplay",
+    "slug": "Gameplay",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
-    "scheme": "gameplay",
+    "scheme": "Gameplay",
     "splash": {
       "image": "./assets/splash.png",
       "resizeMode": "contain",
