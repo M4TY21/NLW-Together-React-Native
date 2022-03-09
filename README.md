@@ -1,6 +1,6 @@
 # NLW Together - React Native Rocketseat
 
-Recreating Rocketseat's NLW Together project with an emphasis on react native in JavaScript.
+Recreating Rocketseat's NLW Together project with an emphasis on react native in JavaScript and with some modifications to the designer.
 
 ## Clone the project and install dependencies
 
@@ -15,7 +15,7 @@ With HTTPS:
 With SSH:
 
 ```git
-  git@github.com:M4TY21/NLW-Together-React-Native.git
+  git clone git@github.com:M4TY21/NLW-Together-React-Native.git
 ```
 
 After that, access the folder through the terminal:
@@ -36,7 +36,7 @@ or
   npm install
 ```
 
-To use Discord Auth, you need to configure the .env file in [https://discord.com/developers/docs](Docs of Discord for developers).
+To use Discord Auth, you need to configure the .env file in [Docs of Discord for developers](https://discord.com/developers/docs).
 
 ## Running the project
 
@@ -60,4 +60,4 @@ you are free to make any suggestion and change in the project, just send a pull 
 
 ## License
 
-This project is licensed under the MIT License - see the [https://github.com/M4TY21/NLW-Together-React-Native/blob/main/README.md](LICENSE.md) file for details.
+This project is licensed under the MIT License - see the [LICENSE.md](https://github.com/M4TY21/NLW-Together-React-Native/blob/main/README.md) file for details.
