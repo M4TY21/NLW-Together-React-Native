@@ -6,13 +6,11 @@ import React, {
 
 import * as AuthSession from "expo-auth-session";
 
-import {
-	REDIRECT_URI,
-	SCOPE,
-	RESPONSE_TYPE,
-	CLIENT_ID,
-	CDN_IMAGE,
-} from "../configs";
+const { REDIRECT_URI } = process.env;
+const { SCOPE } = process.env;
+const { RESPONSE_TYPE } = process.env;
+const { CLIENT_ID } = process.env;
+const { CDN_IMAGE } = process.env;
 
 import { api } from "../services/api";
 
@@ -34,7 +32,7 @@ function AuthProvider({ children }) {
 				}
 			);
 
-			if (type === "success") {
+			if (type === "success" && !params.error) {
 				api.defaults.headers.authorization =
 					"Bearer " + params.access_token;
 
@@ -50,13 +48,11 @@ function AuthProvider({ children }) {
 					firstName,
 					tokens: params.access_token,
 				});
-
-				setLoading(false);
-			} else {
-				setLoading(false);
 			}
 		} catch {
 			throw new Error("Não foi possivel autenticar");
+		} finally {
+			setLoading(false);
 		}
 	}
 

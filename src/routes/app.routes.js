@@ -5,12 +5,11 @@ import { theme } from "../global/styles/theme";
 
 import { AppointmentCreate } from "../screens/AppointmentCreate";
 import { AppointmentDetails } from "../screens/AppointmentDetails";
-import { SignIn } from "../screens/SignIn";
 import { Home } from "../screens/Home";
 
 const { Navigator, Screen } = createNativeStackNavigator();
 
-export function AuthRoutes() {
+export function AppRoutes() {
 	return (
 		<Navigator
 			screenOptions={{
