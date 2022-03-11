@@ -21,11 +21,7 @@ export function SignIn() {
 	const { loading, signIn } = useAuth();
 
 	async function handleSignIn() {
-		try {
-			await signIn();
-		} catch (error) {
-			Alert.alert(error);
-		}
+		await signIn();
 	}
 
 	return (
