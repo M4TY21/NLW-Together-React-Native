@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 import {
 	TouchableOpacity,
@@ -17,18 +17,37 @@ import { GuildIcon } from "../../components/GuildIcon";
 import { TextArea } from "../../components/TextArea";
 import { Header } from "../../components/Header";
 import { Button } from "../../components/Button";
-import { data } from "../Guilds";
 import { Guilds } from "../Guilds";
 
 import { Feather } from "@expo/vector-icons";
 import { theme } from "../../global/styles/theme";
 import { styles } from "./styles";
 
+import { api } from "../../services/api";
+import { useAuth } from "../../hooks/auth";
+
 export function AppointmentCreate() {
 	const [category, setCategory] = useState("");
 	const [openGuildsModal, setOpenGuildsModal] =
 		useState(false);
-	const [guild, setGuild] = useState(data);
+	const [guilds, setGuilds] = useState([]);
+	const [loading, setLoading] = useState(true);
+
+	const { user } = useAuth();
+
+	async function fetchGuilds() {
+		const response = await api.get("/users/@me/guilds", {
+			headers: {
+				authorization: `Bearer ${user.tokens}`,
+			},
+		});
+		setGuilds(response.data);
+		setLoading(false);
+	}
+
+	useEffect(() => {
+		fetchGuilds();
+	}, []);
 
 	function handleOpenGuilds() {
 		setOpenGuildsModal(true);
@@ -39,7 +58,7 @@ export function AppointmentCreate() {
 	}
 
 	function handleGuildSelect(guildSelect) {
-		setGuild(guildSelect);
+		setGuilds(guildSelect);
 		setOpenGuildsModal(false);
 	}
 
@@ -87,7 +106,7 @@ export function AppointmentCreate() {
 							onPress={handleOpenGuilds}
 						>
 							<View style={styles.select}>
-								{guild.icon ? (
+								{guilds.icon ? (
 									<GuildIcon />
 								) : (
 									<View style={styles.image} />
@@ -95,8 +114,8 @@ export function AppointmentCreate() {
 
 								<View style={styles.selectBody}>
 									<Text style={styles.label}>
-										{guild.name
-											? guild.name
+										{guilds.name
+											? guilds.name
 											: "Selecione um servidor"}
 									</Text>
 								</View>
@@ -174,7 +193,11 @@ export function AppointmentCreate() {
 					visible={openGuildsModal}
 					closeModal={handleCloseGuilds}
 				>
-					<Guilds handleGuildSelect={handleGuildSelect} />
+					<Guilds
+						handleGuildSelect={handleGuildSelect}
+						loading={loading}
+						guilds={guilds}
+					/>
 				</ModalView>
 			</KeyboardAvoidingView>
 		</Background>
