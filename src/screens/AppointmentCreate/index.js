@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 
 import {
 	TouchableOpacity,
@@ -23,31 +23,11 @@ import { Feather } from "@expo/vector-icons";
 import { theme } from "../../global/styles/theme";
 import { styles } from "./styles";
 
-import { api } from "../../services/api";
-import { useAuth } from "../../hooks/auth";
-
 export function AppointmentCreate() {
 	const [category, setCategory] = useState("");
 	const [openGuildsModal, setOpenGuildsModal] =
 		useState(false);
 	const [guilds, setGuilds] = useState([]);
-	const [loading, setLoading] = useState(true);
-
-	const { user } = useAuth();
-
-	async function fetchGuilds() {
-		const response = await api.get("/users/@me/guilds", {
-			headers: {
-				authorization: `Bearer ${user.tokens}`,
-			},
-		});
-		setGuilds(response.data);
-		setLoading(false);
-	}
-
-	useEffect(() => {
-		fetchGuilds();
-	}, []);
 
 	function handleOpenGuilds() {
 		setOpenGuildsModal(true);
@@ -181,11 +161,7 @@ export function AppointmentCreate() {
 					</View>
 
 					<View style={styles.footer}>
-						<Button
-							title='Agendar'
-							activeOpacity={0.8}
-							// onPress={handleCreateAppointment}
-						/>
+						<Button title='Agendar' activeOpacity={0.8} />
 					</View>
 				</ScrollView>
 
@@ -193,11 +169,7 @@ export function AppointmentCreate() {
 					visible={openGuildsModal}
 					closeModal={handleCloseGuilds}
 				>
-					<Guilds
-						handleGuildSelect={handleGuildSelect}
-						loading={loading}
-						guilds={guilds}
-					/>
+					<Guilds handleGuildSelect={handleGuildSelect} />
 				</ModalView>
 			</KeyboardAvoidingView>
 		</Background>
