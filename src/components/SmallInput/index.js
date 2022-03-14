@@ -6,6 +6,10 @@ import { styles } from "./styles";
 
 export function SmallInput({ ...rest }) {
 	return (
-		<TextInput style={styles.container} keyboardType='number-pad' {...rest} />
+		<TextInput
+			style={styles.container}
+			keyboardType='number-pad'
+			maxLength={2}
+		/>
 	);
 }

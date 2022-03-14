@@ -17,10 +17,11 @@ import { GuildIcon } from "../../components/GuildIcon";
 import { TextArea } from "../../components/TextArea";
 import { Header } from "../../components/Header";
 import { Button } from "../../components/Button";
+
 import { Guilds } from "../Guilds";
 
-import { Feather } from "@expo/vector-icons";
 import { theme } from "../../global/styles/theme";
+import { Feather } from "@expo/vector-icons";
 import { styles } from "./styles";
 
 export function AppointmentCreate() {
@@ -28,6 +29,12 @@ export function AppointmentCreate() {
 	const [openGuildsModal, setOpenGuildsModal] =
 		useState(false);
 	const [guilds, setGuilds] = useState([]);
+
+	const [day, setDay] = useState("");
+	const [mouth, setMouth] = useState("");
+	const [hour, setHour] = useState("");
+	const [minute, setMinute] = useState("");
+	const [description, setDescription] = useState("");
 
 	function handleOpenGuilds() {
 		setOpenGuildsModal(true);
@@ -87,7 +94,10 @@ export function AppointmentCreate() {
 						>
 							<View style={styles.select}>
 								{guilds.icon ? (
-									<GuildIcon />
+									<GuildIcon
+										guildId={guilds.id}
+										iconId={guilds.icon}
+									/>
 								) : (
 									<View style={styles.image} />
 								)}
@@ -119,9 +129,9 @@ export function AppointmentCreate() {
 									Dia e mês
 								</Text>
 								<View style={styles.column}>
-									<SmallInput maxLength={2} />
+									<SmallInput onChangeText={setDay} />
 									<Text style={styles.divider}>/</Text>
-									<SmallInput maxLength={2} />
+									<SmallInput onChangeText={setMouth} />
 								</View>
 							</View>
 
@@ -135,9 +145,9 @@ export function AppointmentCreate() {
 									Horário
 								</Text>
 								<View style={styles.column}>
-									<SmallInput maxLength={2} />
+									<SmallInput onChangeText={setHour} />
 									<Text style={styles.divider}>:</Text>
-									<SmallInput maxLength={2} />
+									<SmallInput onChangeText={setMinute} />
 								</View>
 							</View>
 						</View>
@@ -157,6 +167,7 @@ export function AppointmentCreate() {
 							maxLength={60}
 							numberOfLines={4}
 							autoCorrect={false}
+							onChangeText={setDescription}
 						/>
 					</View>
 
