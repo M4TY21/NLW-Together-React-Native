@@ -9,6 +9,11 @@ import {
 	KeyboardAvoidingView,
 } from "react-native";
 
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { COLLECTION_APPOINTMENTS } from "../../configs/database";
+import { useNavigation } from "@react-navigation/native";
+import uuid from "react-native-uuid";
+
 import { CategorySelect } from "../../components/CategorySelect";
 import { SmallInput } from "../../components/SmallInput";
 import { Background } from "../../components/Background";
@@ -20,6 +25,7 @@ import { Button } from "../../components/Button";
 
 import { Guilds } from "../Guilds";
 
+import DiscordSvg from "../../img/discord.svg";
 import { theme } from "../../global/styles/theme";
 import { Feather } from "@expo/vector-icons";
 import { styles } from "./styles";
@@ -31,10 +37,12 @@ export function AppointmentCreate() {
 	const [guilds, setGuilds] = useState([]);
 
 	const [day, setDay] = useState("");
-	const [mouth, setMouth] = useState("");
+	const [month, setMonth] = useState("");
 	const [hour, setHour] = useState("");
 	const [minute, setMinute] = useState("");
 	const [description, setDescription] = useState("");
+
+	const navigation = useNavigation();
 
 	function handleOpenGuilds() {
 		setOpenGuildsModal(true);
@@ -53,6 +61,28 @@ export function AppointmentCreate() {
 		categoryId === category
 			? setCategory("")
 			: setCategory(categoryId);
+	}
+
+	async function handleSave() {
+		const newAppointment = {
+			id: uuid.v4(),
+			guilds,
+			category,
+			date: `${day}/${month} ás ${hour}:${minute}h`,
+			description,
+		};
+
+		const storage = await AsyncStorage.getItem(
+			COLLECTION_APPOINTMENTS
+		);
+		const appointments = storage ? JSON.parse(storage) : [];
+
+		await AsyncStorage.setItem(
+			COLLECTION_APPOINTMENTS,
+			JSON.stringify([...appointments, newAppointment])
+		);
+
+		navigation.navigate("Home");
 	}
 
 	return (
@@ -99,7 +129,9 @@ export function AppointmentCreate() {
 										iconId={guilds.icon}
 									/>
 								) : (
-									<View style={styles.image} />
+									<View style={styles.image}>
+										<DiscordSvg width={45} height={45} />
+									</View>
 								)}
 
 								<View style={styles.selectBody}>
@@ -131,7 +163,7 @@ export function AppointmentCreate() {
 								<View style={styles.column}>
 									<SmallInput onChangeText={setDay} />
 									<Text style={styles.divider}>/</Text>
-									<SmallInput onChangeText={setMouth} />
+									<SmallInput onChangeText={setMonth} />
 								</View>
 							</View>
 
@@ -172,7 +204,11 @@ export function AppointmentCreate() {
 					</View>
 
 					<View style={styles.footer}>
-						<Button title='Agendar' activeOpacity={0.8} />
+						<Button
+							title='Agendar'
+							activeOpacity={0.8}
+							onPress={handleSave}
+						/>
 					</View>
 				</ScrollView>
 

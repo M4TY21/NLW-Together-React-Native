@@ -27,12 +27,13 @@ export const styles = StyleSheet.create({
 		alignItems: "center",
 	},
 	image: {
-		width: 64,
-		height: 68,
-		backgroundColor: theme.colors.secondary40,
-		borderColor: theme.colors.secondary50,
+		width: 62,
+		height: 66,
 		borderRadius: 8,
-		borderWidth: 1,
+		backgroundColor: theme.colors.discord,
+		alignItems: "center",
+		justifyContent: "center",
+		overflow: "hidden",
 	},
 	field: {
 		width: "100%",
