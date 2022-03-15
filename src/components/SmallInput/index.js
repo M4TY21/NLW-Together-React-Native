@@ -10,6 +10,7 @@ export function SmallInput({ ...rest }) {
 			style={styles.container}
 			keyboardType='number-pad'
 			maxLength={2}
+			{...rest}
 		/>
 	);
 }

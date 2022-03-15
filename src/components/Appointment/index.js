@@ -11,10 +11,11 @@ import { theme } from "../../global/styles/theme";
 import { LinearGradient } from "expo-linear-gradient";
 
 export function Appointment({ data, ...rest }) {
-	const [category] = categories.filter(
+	const category = categories.filter(
 		(item) => item.id === data.category
 	);
-	const { owner } = data.guild;
+
+	const { owner } = data.guilds;
 	const { primary, on, secondary50, secondary70 } =
 		theme.colors;
 
@@ -25,13 +26,16 @@ export function Appointment({ data, ...rest }) {
 					style={styles.guildIconContainer}
 					colors={[secondary50, secondary70]}
 				>
-					<GuildIcon />
+					<GuildIcon
+						guildId={data.guilds.id}
+						iconId={data.guilds.icon}
+					/>
 				</LinearGradient>
 
 				<View style={styles.content}>
 					<View style={styles.header}>
 						<Text style={styles.title}>
-							{data.guild.name}
+							{data.guilds.name}
 						</Text>
 
 						<Text style={styles.category}>
