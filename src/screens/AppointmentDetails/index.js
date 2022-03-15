@@ -7,6 +7,8 @@ import {
 	View,
 	FlatList,
 	Alert,
+	Share,
+	Platform,
 } from "react-native";
 
 import { useRoute } from "@react-navigation/native";
@@ -39,11 +41,30 @@ export function AppointmentDetails() {
 				`/guilds/${guildSelected.guilds.id}/widget.json`
 			);
 			setWidget(response.data);
+
+			console.log(widget);
+
 			setLoading(false);
 		} catch (error) {
 			Alert.alert(
 				"A configuração Widget do servidor não está habilidada"
 			);
+		}
+	}
+
+	function handleShareInvitation() {
+		if (widget.instant_invite == null) {
+			Alert.alert("O convite Não está disponivel");
+		} else {
+			const message =
+				Platform.OS === "ios"
+					? `Junte-se a ${guildSelected.guild.name}`
+					: widget.instant_invite;
+
+			Share.share({
+				message,
+				url: widget.instant_invite,
+			});
 		}
 	}
 
@@ -61,6 +82,7 @@ export function AppointmentDetails() {
 							name='share'
 							size={24}
 							color={theme.colors.primary}
+							onPress={handleShareInvitation}
 						/>
 					</TouchableOpacity>
 				}

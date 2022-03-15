@@ -10,7 +10,7 @@ import { Feather } from "@expo/vector-icons";
 import { theme } from "../../global/styles/theme";
 import { styles } from "./styles";
 
-export function Header({ title, action }) {
+export function Header({ title, action, ...rest }) {
 	const navigation = useNavigation();
 
 	const { secondary100, secondary40, heading } =
@@ -39,7 +39,9 @@ export function Header({ title, action }) {
 			<Text style={styles.title}>{title}</Text>
 
 			{action ? (
-				<View>{action}</View>
+				<TouchableOpacity activeOpacity={0.8} {...rest}>
+					{action}
+				</TouchableOpacity>
 			) : (
 				<View style={{ width: 24 }} />
 			)}
