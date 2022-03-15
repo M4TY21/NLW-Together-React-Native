@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 
 import {
 	TouchableOpacity,
@@ -6,7 +6,10 @@ import {
 	Text,
 	View,
 	FlatList,
+	Alert,
 } from "react-native";
+
+import { useRoute } from "@react-navigation/native";
 
 import { ListDivider } from "../../components/ListDivider";
 import { ButtonIcon } from "../../components/ButtonIcon";
@@ -14,28 +17,39 @@ import { ListHeader } from "../../components/ListHeader";
 import { Background } from "../../components/Background";
 import { Header } from "../../components/Header";
 import { Member } from "../../components/Member";
+import { Load } from "../../components/Load";
 
 import { theme } from "../../global/styles/theme";
 import { styles } from "./styles";
-
 import BannerImg from "../../img/banner.png";
 import { Fontisto } from "@expo/vector-icons";
 
+import { api } from "../../services/api";
+
 export function AppointmentDetails() {
-	const members = [
-		{
-			id: "1",
-			username: "Matheus",
-			avatar_url: "http://github.com/M4TY21.png",
-			status: "online",
-		},
-		{
-			id: "2",
-			username: "Rodrigo",
-			avatar_url: "http://github.com/M4TY21.png",
-			status: "offline",
-		},
-	];
+	const [widget, setWidget] = useState({});
+	const [loading, setLoading] = useState(true);
+
+	const route = useRoute();
+	const { guildSelected } = route.params;
+
+	async function fetchGuildWidget() {
+		try {
+			const response = await api.get(
+				`/guilds/${guildSelected.guilds.id}/widget.json`
+			);
+			setWidget(response.data);
+			setLoading(false);
+		} catch (error) {
+			Alert.alert(
+				"A configuração Widget do servidor não está habilidada"
+			);
+		}
+	}
+
+	useEffect(() => {
+		fetchGuildWidget();
+	}, []);
 
 	return (
 		<Background>
@@ -57,26 +71,39 @@ export function AppointmentDetails() {
 				style={styles.banner}
 			>
 				<View style={styles.bannerContent}>
-					<Text style={styles.title}>Lendários</Text>
+					<Text style={styles.title}>
+						{guildSelected.guilds.name}
+					</Text>
 
 					<Text style={styles.subtitle}>
-						É hoje que vamos chegar ao challenger sem perder
-						uma partida da md10
+						{guildSelected.description}
 					</Text>
 				</View>
 			</ImageBackground>
 
-			<ListHeader title='Jogadores' subtitle='Total 3' />
+			{loading ? (
+				<Load />
+			) : (
+				<>
+					<ListHeader
+						title='Jogadores'
+						subtitle={`Total ${widget.members.length}`}
+						marginTop={15}
+					/>
 
-			<FlatList
-				data={members}
-				keyExtractor={(item) => item.id}
-				renderItem={({ item }) => <Member data={item} />}
-				ItemSeparatorComponent={() => (
-					<ListDivider isCentered />
-				)}
-				style={styles.members}
-			/>
+					<FlatList
+						data={widget.members}
+						keyExtractor={(item) => item.id}
+						renderItem={({ item }) => (
+							<Member data={item} />
+						)}
+						ItemSeparatorComponent={() => (
+							<ListDivider isCentered />
+						)}
+						style={styles.members}
+					/>
+				</>
+			)}
 			<View style={styles.footer}>
 				<ButtonIcon
 					activeOpacity={0.9}

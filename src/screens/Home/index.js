@@ -31,8 +31,10 @@ export function Home() {
 		navigation.navigate("AppointmentCreate");
 	}
 
-	function handleAppointmentDetails() {
-		navigation.navigate("AppointmentDetails");
+	function handleAppointmentDetails(guildSelected) {
+		navigation.navigate("AppointmentDetails", {
+			guildSelected,
+		});
 	}
 
 	function handleCategorySelect(categoryId) {
@@ -99,7 +101,9 @@ export function Home() {
 							<Appointment
 								data={item}
 								activeOpacity={0.8}
-								onPress={handleAppointmentDetails}
+								onPress={() =>
+									handleAppointmentDetails(item)
+								}
 							/>
 						)}
 						ItemSeparatorComponent={() => <ListDivider />}
