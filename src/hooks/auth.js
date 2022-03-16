@@ -45,8 +45,6 @@ function AuthProvider({ children }) {
 
 				const userInfo = await api.get("/users/@me");
 
-				console.log(userInfo);
-
 				const firstName =
 					userInfo.data.username.split(" ")[0];
 
@@ -72,6 +70,11 @@ function AuthProvider({ children }) {
 		}
 	}
 
+	async function signOut() {
+		setUser({});
+		await AsyncStorage.removeItem(COLLECTION_USERS);
+	}
+
 	async function loadUserStorageData() {
 		const storage = await AsyncStorage.getItem(
 			COLLECTION_USERS
@@ -90,7 +93,9 @@ function AuthProvider({ children }) {
 	}, []);
 
 	return (
-		<AuthContext.Provider value={{ user, loading, signIn }}>
+		<AuthContext.Provider
+			value={{ user, loading, signIn, signOut }}
+		>
 			{children}
 		</AuthContext.Provider>
 	);

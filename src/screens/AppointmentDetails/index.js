@@ -12,6 +12,7 @@ import {
 } from "react-native";
 
 import { useRoute } from "@react-navigation/native";
+import * as Linking from "expo-linking";
 
 import { ListDivider } from "../../components/ListDivider";
 import { ButtonIcon } from "../../components/ButtonIcon";
@@ -27,10 +28,13 @@ import BannerImg from "../../img/banner.png";
 import { Fontisto } from "@expo/vector-icons";
 
 import { api } from "../../services/api";
+import { useAuth } from "../../hooks/auth";
 
 export function AppointmentDetails() {
 	const [widget, setWidget] = useState({});
 	const [loading, setLoading] = useState(true);
+
+	const { user } = useAuth();
 
 	const route = useRoute();
 	const { guildSelected } = route.params;
@@ -38,11 +42,14 @@ export function AppointmentDetails() {
 	async function fetchGuildWidget() {
 		try {
 			const response = await api.get(
-				`/guilds/${guildSelected.guilds.id}/widget.json`
+				`/guilds/${guildSelected.guilds.id}/widget.json`,
+				{
+					headers: {
+						authorization: `Bearer ${user.tokens}`,
+					},
+				}
 			);
 			setWidget(response.data);
-
-			console.log(widget);
 
 			setLoading(false);
 		} catch (error) {
@@ -71,6 +78,10 @@ export function AppointmentDetails() {
 	useEffect(() => {
 		fetchGuildWidget();
 	}, []);
+
+	function handleOpenDiscord() {
+		Linking.openURL(widget.instant_invite);
+	}
 
 	return (
 		<Background>
@@ -126,12 +137,15 @@ export function AppointmentDetails() {
 					/>
 				</>
 			)}
-			<View style={styles.footer}>
-				<ButtonIcon
-					activeOpacity={0.9}
-					title='Entrar na partida'
-				/>
-			</View>
+			{guildSelected.guilds.owner && (
+				<View style={styles.footer}>
+					<ButtonIcon
+						activeOpacity={0.9}
+						title='Entrar na partida'
+						onPress={handleOpenDiscord}
+					/>
+				</View>
+			)}
 		</Background>
 	);
 }

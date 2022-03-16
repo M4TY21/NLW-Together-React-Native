@@ -1,7 +1,12 @@
-import React, { useState, useCallback } from "react";
-import { FlatList, View } from "react-native";
+import React, {
+	useState,
+	useCallback,
+	useEffect,
+} from "react";
+import { FlatList, View, BackHandler } from "react-native";
 
 import { CategorySelect } from "../../components/CategorySelect";
+import { ButtonLogOff } from "../../components/ButtonLogOff";
 import { Appointment } from "../../components/Appointment";
 import { ListDivider } from "../../components/ListDivider";
 import { Background } from "../../components/Background";
@@ -17,6 +22,7 @@ import {
 
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { COLLECTION_APPOINTMENTS } from "../../configs/database";
+import { useAuth } from "../../hooks/auth";
 
 import { styles } from "./styles";
 
@@ -24,6 +30,9 @@ export function Home() {
 	const [category, setCategory] = useState("");
 	const [appointments, setAppointments] = useState([]);
 	const [loading, setLoading] = useState(true);
+	const [openModal, setOpenModal] = useState(false);
+
+	const { signOut } = useAuth();
 
 	const navigation = useNavigation();
 
@@ -60,11 +69,29 @@ export function Home() {
 		setLoading(false);
 	}
 
+	function handleCloseModal() {
+		setOpenModal(false);
+	}
+
 	useFocusEffect(
 		useCallback(() => {
 			loadAppointment();
 		}, [category])
 	);
+
+	useEffect(() => {
+		const backAction = () => {
+			setOpenModal(true);
+			return true;
+		};
+
+		const backHandler = BackHandler.addEventListener(
+			"hardwareBackPress",
+			backAction
+		);
+
+		return () => backHandler.remove();
+	}, []);
 
 	return (
 		<Background>
@@ -115,6 +142,12 @@ export function Home() {
 					/>
 				</>
 			)}
+
+			<ButtonLogOff
+				visible={openModal}
+				closeModal={handleCloseModal}
+				LogOut={signOut}
+			/>
 		</Background>
 	);
 }

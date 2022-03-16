@@ -2,6 +2,13 @@
 
 Recreating Rocketseat's NLW Together project with an emphasis on react native in JavaScript and with some modifications to the designer.
 
+![App imgs 01](assets/READMEImg-01.jpeg)
+![App imgs 02](assets/READMEImg-02.jpeg)
+![App imgs 03](assets/READMEImg-03.jpeg)
+![App imgs 04](assets/READMEImg-04.jpeg)
+![App imgs 05](assets/READMEImg-05.jpeg)
+![App imgs 06](assets/READMEImg-06.jpeg)
+
 ## Clone the project and install dependencies
 
 Remembering, to run the application is necessary this installed in the machine NodeJS, Yarn and Expo.
